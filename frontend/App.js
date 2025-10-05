@@ -15,7 +15,7 @@ import { storage } from './src/utils/storage';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
-function MainTabs() {
+function MainTabs({ onLogout }) {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -70,13 +70,14 @@ function MainTabs() {
       />
       <Tab.Screen
         name="Profil"
-        component={ProfileScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
             <Text style={{ fontSize: 24 }}>👤</Text>
           ),
         }}
-      />
+      >
+        {(props) => <ProfileScreen {...props} onLogout={onLogout} />}
+      </Tab.Screen>
     </Tab.Navigator>
   );
 }
@@ -100,6 +101,14 @@ export default function App() {
     }
   };
 
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+  };
+
   if (isLoading) {
     return (
       <View style={styles.loadingContainer}>
@@ -115,9 +124,13 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           {!isLoggedIn ? (
-            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="Login">
+              {(props) => <LoginScreen {...props} onLogin={handleLogin} />}
+            </Stack.Screen>
           ) : (
-            <Stack.Screen name="Main" component={MainTabs} />
+            <Stack.Screen name="Main">
+              {(props) => <MainTabs {...props} onLogout={handleLogout} />}
+            </Stack.Screen>
           )}
         </Stack.Navigator>
       </NavigationContainer>

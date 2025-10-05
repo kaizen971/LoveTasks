@@ -12,7 +12,7 @@ import {
 import { storage } from '../utils/storage';
 import { api } from '../utils/api';
 
-export default function LoginScreen({ navigation }) {
+export default function LoginScreen({ onLogin }) {
   const [name, setName] = useState('');
   const [selectedUser, setSelectedUser] = useState(null);
 
@@ -39,7 +39,7 @@ export default function LoginScreen({ navigation }) {
       }
 
       await storage.setCurrentUser(user);
-      navigation.replace('Main');
+      onLogin();
     } catch (error) {
       console.error('Login error:', error);
       Alert.alert('Erreur', 'Impossible de se connecter');

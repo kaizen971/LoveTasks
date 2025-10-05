@@ -13,7 +13,7 @@ import { api } from '../utils/api';
 
 const AVATAR_OPTIONS = ['👤', '😊', '😎', '🤓', '😇', '🥳', '🤠', '👨', '👩', '🧑', '👨‍💻', '👩‍💻'];
 
-export default function ProfileScreen({ navigation }) {
+export default function ProfileScreen({ onLogout }) {
   const [currentUser, setCurrentUser] = useState(null);
   const [name, setName] = useState('');
   const [selectedAvatar, setSelectedAvatar] = useState('👤');
@@ -28,7 +28,7 @@ export default function ProfileScreen({ navigation }) {
   const loadProfile = async () => {
     const user = await storage.getCurrentUser();
     if (!user) {
-      navigation.replace('Login');
+      onLogout();
       return;
     }
 
@@ -79,7 +79,7 @@ export default function ProfileScreen({ navigation }) {
           text: 'Déconnexion',
           onPress: async () => {
             await storage.clearCurrentUser();
-            navigation.replace('Login');
+            onLogout();
           },
           style: 'destructive',
         },
