@@ -13,7 +13,7 @@ LoveTasks est une application React Native + Node.js qui permet à deux personne
 - 👤 **Profils personnalisables** avec avatars
 - 🔥 **Séries quotidiennes** pour maintenir la motivation
 
-## 🏗️ Architecture
+## 🏗️ Architecture rzqr
 
 ```
 LoveTasks/
